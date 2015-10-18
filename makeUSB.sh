@@ -27,10 +27,11 @@ mount "$ISO" "$mnt"
 
 mkdir -p ${TARGET}/boot/extlinux ${TARGET}/live
 extlinux -i ${TARGET}/boot/extlinux
-dd if=/usr/lib/syslinux/mbr.bin of=$dev #X is the drive letter
-cp $mnt/boot/grml32small/vmlinuz ${TARGET}/boot/vmlinuz
-cp $mnt/boot/grml32small/initrd.img ${TARGET}/boot/initrd
-cp $mnt/live/grml32-small/grml32-small.squashfs ${TARGET}/live
+dd if=/usr/lib/syslinux/mbr/mbr.bin of=$dev #X is the drive letter
+
+cp -v $mnt/boot/grml32small/vmlinuz ${TARGET}/boot/vmlinuz
+cp -v $mnt/boot/grml32small/initrd.img ${TARGET}/boot/initrd
+cp -v $mnt/live/grml32-small/grml32-small.squashfs ${TARGET}/live
 umount $mnt
 
 cp extlinux.conf ${TARGET}/boot/extlinux/extlinux.conf
