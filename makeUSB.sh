@@ -6,6 +6,28 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+release="2014.11"
+case "$1" in
+        small32)
+            url="http://download.grml.org/grml32-small_${release}.iso"
+            ;;
+
+        full32)
+            url="http://download.grml.org/grml32-full_${release}.iso"
+            ;;
+
+        small64)
+            url="http://download.grml.org/grml64-small_${release}.iso"
+            ;;
+        full64)
+            url="http://download.grml.org/grml64-full_${release}.iso"
+            ;;
+        *)
+            echo $"Usage: $0 {small32|full32|small64|full64}"
+            exit 1
+
+esac
+
 #get tools
 if [ ! -f "/usr/lib/syslinux/mbr/mbr.bin" ]
 then
@@ -25,7 +47,6 @@ then
 fi
 
 #variables
-url="http://download.grml.org/grml32-small_2014.11.iso"
 ISO="/tmp/grml.iso"
 mnt=/tmp/mnt
 
