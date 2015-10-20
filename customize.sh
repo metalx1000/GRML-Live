@@ -7,7 +7,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 workfs="/tmp/grmlfs"
-tmpmnt="/tmp/fsmnt"
+#tmpmnt="/tmp/fsmnt"
 
 echo "Which Squashfs file?"
 mount |grep vfat|awk '{print $3}'|while read line;do find $line -maxdepth 2 -iname "*.squashfs";done
@@ -29,11 +29,12 @@ then
     exit 1
   fi
 else
-  mkdir -p "$workfs"
-  mkdir -p "$tmpmnt"
-  mount "$squashfs" "$tmpmnt"
-  cp -vr $tmpmnt/* $workfs/
-  umount "$squashfs"
+#  mkdir -p "$workfs"
+#  mkdir -p "$tmpmnt"
+#  mount "$squashfs" "$tmpmnt"
+#  cp -vr $tmpmnt/* $workfs/
+#  umount "$squashfs"
+  unsquashfs -d $workfs $squashfs
   rm $workfs/etc/resolv.conf
   echo nameserver 8.8.8.8 > $workfs/etc/resolv.conf
 fi
@@ -46,7 +47,8 @@ mount -t sysfs sysfs $workfs/sys
 echo "Entering Chroot"
 chroot $workfs zsh
 
-umount -l $workfs/dev $workfs/dev/pts $workfs/proc $workfs/sys
+echo "Unmounting $workfs/dev/pts $workfs/dev $workfs/proc $workfs/sys"
+umount -lf $workfs/dev $workfs/dev/pts $workfs/proc $workfs/sys
 
 rm $squashfs
 mksquashfs "$workfs" $squashfs
