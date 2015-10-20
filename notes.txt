@@ -1,0 +1,16 @@
+apt-get update && apt-get upgrade -y && apt-get install lxde lightdm chromium wicd-gtk wicd-cli && apt-get remove fluxbox
+
+#set autologin-user
+vim /etc/lightdm/lightdm.conf
+
+#x display in chroot
+export DISPLAY=:0
+su grml -c xterm
+
+#Xnest display
+#on host computer
+Xnest :2&
+
+#in chroot
+export DISPLAY=:2
+su grml -c lxde
