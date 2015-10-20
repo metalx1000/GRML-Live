@@ -13,4 +13,4 @@ Xnest :2&
 
 #in chroot
 export DISPLAY=:2
-su grml -c lxde
+su grml -c lxsession
