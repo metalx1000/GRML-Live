@@ -32,7 +32,7 @@ else
   mkdir -p "$workfs"
   mkdir -p "$tmpmnt"
   mount "$squashfs" "$tmpmnt"
-  cp -vr "$tmpmnt/*" "$workfs/"
+  cp -vr $tmpmnt/* $workfs/
   umount "$squashfs"
   rm $workfs/etc/resolv.conf
   echo nameserver 8.8.8.8 > $workfs/etc/resolv.conf
@@ -46,7 +46,7 @@ mount -t sysfs sysfs $workfs/sys
 echo "Entering Chroot"
 chroot $workfs zsh
 
-umount $workfs/dev $workfs/dev/pts $workfs/proc $workfs/sys
+umount -l $workfs/dev $workfs/dev/pts $workfs/proc $workfs/sys
 
 rm $squashfs
 mksquashfs "$workfs" $squashfs
